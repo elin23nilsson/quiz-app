@@ -1,3 +1,4 @@
+/*
 var fragor = [
 {
     fraga: "Hur många hoppjerkor finns det?",
@@ -10,7 +11,32 @@ var fragor = [
     alternativ: ["Blå","Brun","Vit","Gul"]
 }
 ];
+*/
 
+
+//Gör en AJAX-request
+
+var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple', true)
+    xhr.onload = function(){
+        if(this.status == 200) {
+            var frageladan = JSON.parse(this.responseText);
+            console.log(frageladan); 
+            console.log(frageladan.results[0].question);
+            var fraga = document.getElementById("fraga");
+            var fraga1 = frageladan.results[0].question; 
+            fraga.innerHTML = fraga1;
+            
+            console.log(frageladan.results[0].correct_answer);
+            var fraga = document.getElementById("fraga");
+            var fraga1 = frageladan.results[0].question; 
+            fraga.innerHTML = fraga1;
+        }
+    }
+    xhr.send();
+
+//Förra gången
+/*
 console.log(fragor[1].fraga);
 var fragetext = document.getElementById("fraga");
 fragetext.innerHTML = fragor[0].fraga;
@@ -21,15 +47,7 @@ for (t = 0; t < fragor[0].alternativ.length; t++) {
     knapp[t] = document.getElementById(vilken);
     knapp[t].innerHTML = fragor[0].alternativ[t];
     }
-
-
-
-
-
-
-
-
-
+*/
 
 
 //Gammal kod som jag kan titta på
