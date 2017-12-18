@@ -14,6 +14,7 @@ var fragor = [
 */
 
 
+
 //Gör en AJAX-request
 
 var xhr = new XMLHttpRequest();
@@ -23,17 +24,46 @@ var xhr = new XMLHttpRequest();
             var frageladan = JSON.parse(this.responseText);
             console.log(frageladan); 
             console.log(frageladan.results[0].question);
+            var alternativ = [frageladan.results[0].correct_answer,frageladan.results[0].incorrect_answers[0],frageladan.results[0].incorrect_answers[1],frageladan.results[0].incorrect_answers[2]];
+            console.log(alternativ[0]);
+            shuffle(alternativ);
+            console.log(alternativ[0]);
+            var knapp = [];
+                for (t = 0; t < alternativ.length; t++) {
+                    var vilken ="alt"+t;
+                    knapp[t] = document.getElementById(vilken);
+                    knapp[t].innerHTML = alternativ[t];
+             }
             var fraga = document.getElementById("fraga");
             var fraga1 = frageladan.results[0].question; 
             fraga.innerHTML = fraga1;
             
-            console.log(frageladan.results[0].correct_answer);
+            //console.log(frageladan.results[0].correct_answer);
             var fraga = document.getElementById("fraga");
             var fraga1 = frageladan.results[0].question; 
             fraga.innerHTML = fraga1;
         }
     }
     xhr.send();
+
+    function shuffle(array) {
+
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        //While there remain elements to shuffle
+        while (0 !== currentIndex) {
+
+            //Pick a remaining element 
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            //And swap it with the current element 
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    }
 
 //Förra gången
 /*
