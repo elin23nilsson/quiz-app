@@ -21,27 +21,32 @@ var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple', true)
     xhr.onload = function(){
         if(this.status == 200) {
+            //Gör om JSON till vanligt JavaScript-objekt
             var frageladan = JSON.parse(this.responseText);
-            console.log(frageladan); 
-            console.log(frageladan.results[0].question);
+            //SKapar en array av frågealternativen
             var alternativ = [frageladan.results[0].correct_answer,frageladan.results[0].incorrect_answers[0],frageladan.results[0].incorrect_answers[1],frageladan.results[0].incorrect_answers[2]];
-            console.log(alternativ[0]);
+            //Blandar alternativen
             shuffle(alternativ);
-            console.log(alternativ[0]);
+            
+            //Skapar svarsalternativen
             var knapp = [];
                 for (t = 0; t < alternativ.length; t++) {
                     var vilken ="alt"+t;
                     knapp[t] = document.getElementById(vilken);
                     knapp[t].innerHTML = alternativ[t];
-             }
+                    knapp[t].addEventListener("click", function() {
+                        var svar = this.innerHTML;
+                        console.log(svar);
+                        var ratt = frageladan.results[0].correct_answer;
+                        kollaRatt(svar, ratt);
+                    });
+                    }
+             
+             //SKapar frågan
             var fraga = document.getElementById("fraga");
             var fraga1 = frageladan.results[0].question; 
             fraga.innerHTML = fraga1;
             
-            //console.log(frageladan.results[0].correct_answer);
-            var fraga = document.getElementById("fraga");
-            var fraga1 = frageladan.results[0].question; 
-            fraga.innerHTML = fraga1;
         }
     }
     xhr.send();
@@ -63,6 +68,16 @@ var xhr = new XMLHttpRequest();
             array[randomIndex] = temporaryValue;
         }
         return array;
+    }
+
+    function kollaRatt(svar, ratt) {
+        console.log(ratt);
+        if(svar == ratt) {
+            console.log("Du svarade rätt");
+        }
+        else {
+            console.log("Du svarade fel");
+        }
     }
 
 //Förra gången
